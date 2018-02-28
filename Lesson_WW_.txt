@@ -1,0 +1,27 @@
+
+
+
+studio adduser им€ пользовател€ vboxsf 
+
+пароль
+
+vboxsf - група з повним доступом
+
+
+ln -s путь к папке на который надо €рлык  путь к €рлыку
+
+ln -s /media/sf_Linux1 ~/Linux
+
+
+
+основние команды
+
+sudo apt-get instal им€ пакета
+
+sudo apt-get update - обновление только информации о программах
+
+sudo apt get install aptitude - инстал€цы€ программы
+
+aptitude - менеджер пакетов
+
+sudo aptitude safe-upgrade - всьо что есть уставлено обновить
