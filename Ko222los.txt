@@ -1,0 +1,69 @@
+grep wnetrze pliku 
+
+wyrazenia 
+
+
+grep "root" /etc/passwd - zanlesc w pliku rota
+
+
+"^root" /etc/passwd
+
+^ - poczatek linii 
+
+grep "$root" /etc/passwd
+
+
+$ - koniec lini
+
+. jeden zank lub brak znaku
+* dowolna ilosc powtuzen znaku
+
+
+grep -v "/bin/bash" /etc/passwd
+
+
+-v - negacja
+i - ignoruje wielkosc liter
+
+ grep -vi "/biN/bash" /etc/passwd
+
+
+
+ grep -l "PATH" /etc/* 2>/dev/null
+
+ grep "PATH" /etc/profile | wc -l 
+ grep -c "PATH" /etc/profile
+
+
+ echo $PATH | grep "${HOME}$" niema w katalogu $ sie konczy
+
+
+--------------------------------------------
+#!bin /bin/bash
+read -p "Podaj login: " konto
+if [ who | grep -c "^$(konto) " -gt 0 ]
+   echo $(konto) jest zalogowany
+else
+   echo $(konto)  nie jest zalogowany
+fi
+--------------------------------------------
+"WMIIUWM\144383"
+
+
+ls -l | tr "a-z" "A-Z"  podmienia 
+
+who | tr -s " "   - odwraca
+
+
+who | cut -d" " -f1,6
+
+
+
+
+
+
+
+
+
+
+
