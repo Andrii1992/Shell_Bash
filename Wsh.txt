@@ -1,0 +1,1142 @@
+emulator terminala: putty
+adres: orfi.uwm.edu.pl
+
+login: sNrAlbumu
+hasło: AdaNow123
+
+powłoka bash
+składnia polecenia:
+polecenie [opcje] [listaArgumentów]
+
+polecenia powłoki:
+passwd - zmiana hasła
+
+pwd - bieżąca lokalizacja
+
+ls  - lista plików
+
+pomoc do poleceń:
+man polecenie np.: man ls
+
+ls -al
+
+rodzaje plików:
+- plik zwykły
+d katalog
+c urządzenia o dostępie znakowym
+b urządzenia o dostępie blokowym
+l linki, dołączenia
+
+uprwnienia podstawowe:
+r czytanie
+w pisanie, możliwośc zmian
+x wykonywanie
+
+3 grupy
+pierwsza dotyczy właściciela pliku
+druga    dotyczy grupy (własciciela grupowego)
+trzecia  dotyczy wszystkich pozostałych uzytkowników
+
+cd nazwaKatalogu  - zmiana katalogu
+.. katalog nadrzędny
+.  katalog bieżący
+/  katalog główny
+~  katalog domowy
+
+cd (to samo co cd ~) - przejście do katalogu domowego
+
+
+mkdir nazwaKatalogu    	tworzenie katalogu
+rm [opcje] nazwa  	usuwanie pliku
+rm -r nazwa		usuwanie katalogu
+rmdir nazwa		usuwanie katalogu
+
+metaznaki w nazwach plików
+* dowolny ciąg znaków
+? jeden dowolny znak
+[listaZnakow] jeden ze znaków
+[a-z]  dowolna mała litera
+Polecenia powłoki bash cd..
+
+cp kopiowanie plików
+cp [opcje] źródło cel
+
+Katalog /etc zawiera pliki konfiguracyjne
+Do katalogu bieżącego skopiować z katalogu /etc plik passwd
+
+cp /etc/passwd .
+
+Do katalogu bieżącego skopiować z katalogu /etc plik group
+cp /etc/group .
+
+oglądanie zawartości pliku
+cat nazwaPliku
+more nazwaPliku
+less nazwaPliku
+
+plik passwd - lista kont założonych na serwerze (kont niedomenowych)
+nazwaKonta:x:UID:GID:opis:katalog domowy:powłoka
+
+x -kiedyś tu było hasło
+UID identyfikator użytkownika
+GID identyfikator grupy podstawowej
+
+plik group - lista grup założonych na serwerze
+qnazwaGrupy:x:GID:[lista uzytkowników]
+
+przydatne polecenia: id, groups
+
+plik shadow - plik z hasłami
+cp /etc/shadow .
+
+robimy kopię pliku passwd z katalogu . i nazywamy ją KopiaPasswd
+
+cp passwd KopiaPasswd
+cp passwd ./KopiaPasswd
+
+chmod - zmiana uprawnień do pliku
+
+do pliku passwd grupie dodać prawo "w"
+chmod g+w passwd
+do pliku group grupie zabra? prawo "r"
+chmod g-r group
+do pliku KopiaPasswd grupie dodać prawo "w", pozostałym zabrać prawa "rx"
+chmod g+w,o-r KopiaPasswd
+
+można podać wzorzec bitowy nowych praw
+rw- r-- ---
+110 100 000
+
+6 (4+2)
+4
+0
+chmod 640 passwd
+
+do pliku group nada? uprawnienia: rwxr-x--x
+111 1-1 --1
+7   5   1
+chmod 751 group 
+do pliku group nadać uprawnienia: rw-rwxr-x
+rw- rwx r-x
+110 111 101
+
+edytor tekstu: mcedit
+utworzy? plik ~/toja zawieraj?cy wasze imię i nazwisko
+
+polecenie umask
+ustawia domyślne uprawnienia dla tworzonych plików
+domyślne uprawnienia maja być: rw-rw----
+
+
+mv zmiana nazwy, przesunięcie pliku
+Tworzenie dołączeń
+polecenie: ln
+linki symboliczne
+
+linki twarde
+
+i-węzeł (inode)
+
+polecenie: stat nazwaPliku
+wyświetla status pliku
+
+find [ścieżka] [opcje] wyrażenie testujące
+
+w katalogu /etc i podkatalogach znaleźć pliki których nazwa zaczyna się od "passwd"
+find /etc -name passwd* 2>/dev/null
+
+w katalogu /etc (bez podkatalogów) znaleźć pliki których nazwa zaczyna się od "passwd"
+find /etc -maxdepth 1 -name passwd* 2>/dev/null
+
+w katalogu /etc (bez podkatalogów) znaleźć pliki które były zmieniane w ciągu ostatnich 30 dni (zmiana zawartości)
+find /etc -maxdepth 1 -mtime -31
+
+w katalogu /bin (bez podkatalogów) znaleźć pliki których rozmiar >4KB
+
+
+w katalogu /tmp (bez podkatalogów) znaleźć pliki których włascicielem jest magda
+
+
+w katalogu /tmp (bez podkatalogów) znaleźć pliki których włascicielem nie jest magda
+
+
+Wyszukać wszystkie podkatalogi katalogu domowego
+
+W katalogu /bin  wyszukać pliki typu link symboliczny , których nazwa zaczyna się na literę "r"
+
+w katalogu /etc (bez podkatalogów) znaleźć pliki które nie były zmieniane w ciągu ostatnich 30 dni (zmiana zawartości)
+
+Wyszukać w katalogu domowym wszystkie pliki z czasem modyfikacji póżniejszym niż do pliku  /etc/passwd
+Polecenie echo
+===============
+
+echo [OPCJE]... [NAPIS]...
+
+
+Polecenie echo wypisuje ciąg znaków NAPIS na standardowe wyjście (stdout) czyli na ekranie
+
+np.; echo witaj
+
+
+Zmienne powłoki  
+================
+Zmienne służą do przechowywania danych.
+Powłoka nie wymaga deklarowania typu zmiennej.
+W powłoce Bash zmienne traktowane sa jak napisy.
+
+1.
+Zmienne programowe (użytkownika)
+--------------------------------
+to zmienne definiowane przez użytkownika w skryptach powłoki.
+
+Definicja zmiennej programowej wygląda następująco:
+nazwaZmiennej=wartość  (uwaga! bez spacji przed i po znaku =)
+np.:  x=123	
+imie=magda
+
+usunięcie zmiennej: 
+unset nazwaZmiennej   
+
+Odwołanie do zmiennej:  ${nazwaZmiennej} np.:    
+echo ${imie}
+Uwaga! Nawiasy {} są opcjonalne, sprawdź kiedy są konieczne
+
+
+tworzenie  zmiennej tylko do odczytu:    
+readonly nazwaZmiennej=wartość  
+
+
+Interpretacja wyrażeń arytmetycznych:
+wykonywanie operacji całkowitoliczbowych na zmiennych
+=====================================================
+
+
+Sposób 1: 
+polecenie: let
+x=1;
+let "wyrażenie" np.: let "x=x+1"
+echo x=$x, wyświetla x=2   
+---------------
+Sposób 2: 
+$((wyrażenie))   np.: x=$((x*4))
+
+Podstawowe operacje:
++ * - / %(modulo) **(potęgowanie)
+
+polecenie read - podstawienie na zmienną wartości wpisanej ze standardowego wejścia
+
+read nazwaZmiennej
+read -p "Podaj nazwe pliku: " plik
+
+2.
+Zmienne Srodowiskowe shella
+==========================
+Zmienne środowiskowe używane są do przekazywania informacji powłoce oraz programom uruchamianym pod jej kontrolą. Informacje zapisane w zmiennych środowiskowych są wykorzystywane do określenia parametrów interakcji pomiędzy użytkownikiem, powłoką, systemem operacyjnym i programami. 
+Zgodnie z przyjętą konwencją, nazwy zmiennych środowiskowych składają się tylko z wielkich liter. 
+Wiele zmiennych środowiskowych definiowanych
+jest w globalnych plikach konfiguracyjnych (pliki konfiguracyjne opisane zostaną w dalszej części). 
+
+Takie zmienne można też definiować za pomocą plików konfigurujących sesję użytkownika. 
+
+
+Użytkownik ma dostęp do tych zmiennych, czyta je i może zmieniać.
+Aby zobaczyć ustawienia zmiennych lokalnych możemy wydać polecenie: 
+set
+env
+
+Sprawdź dokładnie znaczenie poniżej wymienionych zmiennych:
+
+HISTFILE 
+HISTSIZE 
+EDITOR 
+PATH 
+CDPATH 
+PS1 
+PS2 
+PWD 
+HOSTNAME 
+MAIL   
+
+3.
+Zmienne specjalne (systemowe)
+==============================
+Są definiowane przez system i w przeciwieństwie do innych zmiennych nie można zmieniać ich wartości. 
+Najczęściej zmienne te wykorzystywane są w skryptach do sterowania programem.
+Przykładowe zmienne specjalne to :
+$# - liczba parametrów przekazanych do programu
+$? - kod zakończenia polecenia lub programu wywołanego z programu powłoki
+ls -l /bin
+echo $?  	wynik 0
+ls -l /bin/aaaaa (błąd)
+echo $?		wynik 2
+cp /etc/passwd 
+echo $?	
+
+Kod powrotu 0 oznacza brak błędów!!!
+============================================
+
+$0 - nazwa uruchomionego programu 
+$1,$2 - kolejne parametry przekazane do programu
+$$ - numer procesu bieżącego shella
+$+ - rozwijane do "$1 $2 ..."
+$@ - rozwijane do "$1" "$2" ....
+
+
+================================
+Polecenie echo i znaki cytowania
+
+Cytowanie
+==========
+
+Do wyświetlenia tekstu lub wartości zmiennych na ekranie służy polecenie echo.
+
+Znaki cytowania wyłączaja interpretację znaków specjalnych
+
+echo katlog domowy to: ~ 
+echo nazwa hosta ${HOSTNAME}
+
+
+
+
+Powłoka Bash odróżnia i inaczej interpretuje trzy rodzaje znaków cytowania:
+=========================================================
+
+1.cudzysłów " " wszystko pomiedzy "i" jest brane doslownie
+  z wyjatkiem nastepujacych znakow, ktore zachowują swoje specjalne 
+  znaczenie:
+  $ podstawienie zmiennej
+  ` podstawienie polecenia (akcent)
+  " oznaczenie końca podwojnego cudzyslowu
+
+2.apostrof ' ' wszystko pomiedzy 'i' jest brane doslownie.
+  
+
+3.\ znak nastepujacy po \ jest brany doslownie
+(czasem chcemy znaków specjalnych użyć w zwykłym znaczeniu).
+  
+akcent ` ` (znak pod tyldą)
+umożliwia zacytowanie polecenia, bardzo przydatne jeśli chce się podstawić pod zmienną wynik jakiegoś polecenia.
+
+Przykład:
+
+lista=`ls -la $PWD`
+echo $lista                          
+
+Uwaga!! Alternatywny zapis, który ma takie samo działanie wygląda tak:  $(polecenie)
+
+lista=$(ls -la $PWD)
+
+
+np.: na zmienną "data" podstawić wynik polecenia "date"
+Uwaga, sprawdż najpierw jak dzoiała polecenie data
+
+data=`date`
+
+wypisać datę w formacie: dd-mm-rrrr
+date +%d-%m-%Y
+zdefiniować zmienną rok pamiętającą rok (z bieżącej daty)
+rok=`date +%Y`
+lub
+data=$(date +%Y)
+
+
+Sprawdź czy potrafisz:
+=====================
+zdefiniuj zmienne:
+na zmienną uczelnia podstaw wartośc UWM
+zmiennej liczba przypisz wartość 4
+wykonaj na tej zmiennej operacje matematyczne:
+dadaj 2, podziel przez 3, zwiększ o 1
+na zmienną miesiąc podstaw miesiąc z polecenia data
+usuń zmienną uczelnia
+Poleceniem echo wypisz tekst: moj kotalog domowy to: "ścieżka do katalogu domowego" ; dzisiejsza data: "data w formacie rr-mm-dd" 
+Instukcje sterujące
+======================
+
+
+Instrukcja if
+-----------------
+if  warunek1;then
+   instrukcja1
+   ...
+   instrukcja2
+[elif warunek2; then
+   instrukcja3]
+.
+.
+[else
+   instrukcja4
+   .....]
+fi
+
+do podawania warunków służy polecenie:
+
+test wyrażenie
+     lub
+[ wyrażenie ]
+
+UWAGA: po nawiasie otwierającym i przed zamykającym musi być spacja.
+
+Ważniejsze wyrażenia:
+========================== 
+dotyczące plików:
+-----------------
+ -d plik - prawda, jeśli plik istnieje i jest katalogiem 
+ -e plik - prawda, jeśli plik istnieje 
+ -f plik - prawda, jeśli plik istnieje i jest zwykłym plikiem 
+ -l plik - prawda, jeśl  plik istnieje i jest dowiązaniem symbolicznym 
+ -r plik - prawda, jeśli plik istnieje i można go czytać 
+ -s plik - prawda, jeśli plik istnieje i ma rozmiar większy od zera 
+ -u plik - prawda, jeśli plik istnieje i ma ustawiony bit set-user-id 
+ -w plik - prawda, jeśli plik istnieje i można do niego pisać · -x plik - prawda, jeśli plik istnieje i można go wykonać 
+ plik1 -nt plik2 - prawda, jeśli plik1 jest nowszy (zgodnie z datą modyfikacji) niż plik2 
+ plik1 -ot plik2 - prawda, jeśli plik1 jest starszy niż plik2 
+ plik1 -ef plik2 - prawda, jeśli plik1 i plik2 mają te same numery i-węzła. 
+
+porównywanie napisów
+------------------------
+ -z ciąg - prawda, jeśli ciąg ma długość równą zero 
+ -n ciąg - prawda, jeśli ciąg ma długość większość od zera 
+ ciąg1 = ciąg2 - prawda, jeśli ciągi są jednakowe 
+ ciąg1 != ciąg2 - prawda, jeśli ciągi są różne 
+
+
+porównanie całkowitoliczbowe
+--------------------------------
+ argument1 -eq argument2 
+zamiast "="
+ argument1 -ne argument2 
+zamiast "!="
+ argument1 -lt argument2 
+zamiast "<"
+ argument1 -le argument2 
+zamiast "<="
+ argument1 -gt argument2 
+zamiast ">"
+ argument1 -ge argument2 
+zamiast ">="
+
+
+
+
+operatory logiczne
+-------------------
+! wyrażenie - (negacja) prawda, jeśli wyrażenie jest fałszywe 
+wyrażenie -a wyrażenie - prawda, jeśli oba wyrażenia są prawdziwe (operator logiczny AND) 
+wyrażenie -o wyrażenie - prawda, jeśli przynajmniej jedno z wyrażeń jest prawdziwe (operator logiczny OR) 
+
+
+Inną instrukcją warunkową jest struktura case ... in. Przykład:
+
+-----------------------------------------------------------
+case wartosc in
+   wzorzec1)instrukcja1
+       ;;
+   wzorzec2)instrukcja2
+       ;;
+   wzorzec3)instrukcja3
+       ;;
+   *)instrukcja4
+       ;;
+esac
+
+wzorce mogą używać metaznaków i znaku |
+Wykonanie instrukcja1, jeśli wartość jest zgodna ze wzorcem wzorzec1,
+Wykonanie instrukcja2, jeśli wartość jest zgodna ze wzorcem wzorzec2
+.......
+wartosc jest zazwyczaj zmienną powłoki
+
+
+ 
+
+Pisanie skryptów
+=================
+Skrypty
+=========
+Narzędzie: dowolny edytor tekstowy
+
+Pierwsza linijka w skrypcie definiuje z jakiej powłoki korzysta skrypt
+#!/bin/bash 
+
+polecenia umieszczamy w nowych liniach, lub stosujemy ; jako separator poleceń
+
+Uruchamianie skryptów
+======================
+1.
+Aby taki skrypt można było uruchomić, należy nadać mu atrybut wykonyawlności 'x'
+
+Tak przygotowany skrypt uruchamia się jak każdy inny program. 
+./skrypt
+
+wykonanie skryptu w podpowłoce
+
+2.
+Skrypt można też uruchomić bez nadawania mu atrybutu wykonywalności.
+
+sh nazwa_skryptu 
+
+wykonanie skryptu w podpowłoce
+
+3.
+. skrypt 
+
+wykonanie skryptu w bieżącej powloce
+
+Przykłady:
+=================
+
+zad. 1
+======
+Skrypt pyta o imię, wyświetla komunikat "Witaj podane imię"
+
+zad. 2
+======
+Napisać skrypt, który wczytuje nazwe pliku i sprawdza, czy istnieje plik zwykły  o podanej nazwie. Wyświetla stosowny komunikat.
+
+zad. 3
+======
+Napisać skrypt, który wczytuje nazwę katalogu i sprawdza, czy istnieje 
+katalog  o podanej nazwie
+TAK - kasuje katalog 
+NIE - tworzy katalog
+
+zad. 4
+=========
+Skrypt prosi o podanie hasła, sprawdza, czy zostało podane prawidłowe hasło 
+założenie prawidłowe hasło to "j23"). Wyświetla stosowny komunikat.
+
+zad. 5
+=========
+Napisać skrypt, który wczytuje nazwę katalogu, zakłada katalog o podanej nazwie. 
+Sprawdza, czy katalog został założony.
+
+======
+W katogu domowym znajdują sie skrypty uruchamiane przy logowaniu. 
+cat ~/.bash_profile
+cat ~/.bashrc
+Deskryptor pliku – identyfikator pliku wykorzystywany przez system operacyjny. Po wykonaniu operacji otwarcia pliku, deskryptor pliku może być wykorzystywany wielokrotnie przez wywołanie systemowe w operacjach wejścia/wyjścia.
+Deskryptor pliku jest zwracany przez funkcje systemowe z rodziny open.
+Określenie deskryptor pliku jest używane głównie w systemach operacyjnych zgodnych z normą POSIX (grupa Linux). W terminologii Microsoft Windows używane jest określenie "uchwyt pliku" (ang. file handle).
+Zgodnie z POSIX deskryptor pliku to liczba całkowita, czyli wartość typu int z języka C. Domyślnie każdy proces po uruchomieniu ma otwarte 3 standardowe deskryptory plików:
+{źródło: Wikipedia)
+
+Przekierowanie standardowego wejścia, wyjścia
+-----------------------------------------------
+
+Deskryptory plików	opis	     domyślne urządzenie
+---------------------------------------------
+0			     stdin	     klawiatura
+1			     stdout	terminal danych prawidłowych
+2			     stderr	terminal błędów
+
+Proste przekierowania
+-----------------------
+polecenie>plik     plik jest tworzony od nowa (nadpisywanie)
+polecenie>>plik    dopisywanie do pliku
+polecenie<plik
+
+ćwiczenia:
+	ls -l >lista
+---
+używając przekierowania utworzyć plik "toJa" zawierający wasze imię i nazwisko
+	echo Jan Kowalski > toJa
+---
+Do pliku toJa dopisać nazwę waszego katalogu domowego
+	echo ~ >> toJa
+lub
+	echo ${HOME} >> toJa
+---
+Z katalogu /tmp wyświetlić pliki, których włascicielem jest magda
+	find /tmp -user "magda"
+	find /tmp -user "magda" >plikiMagdy
+to samo co:
+	find /tmp -user "magda" 1>plikiMagdy
+przekierowanie komunikatów o błedach
+	find /tmp -user "magda" 2>bledy
+	find /tmp -user "magda" 2>bledy 1>plikiMagdy
+---
+przekierowanie stdin
+echo Magda>mojeImie
+read imie<mojeImie
+
+Potok:
+---------
+Potok (ang. pipe) jest to mechanizm komunikacji międzyprocesowej umożliwiający bezpośrednią wymianę danych między uruchomionymi procesami. Komunikacja ta jest możliwia dzięki podłączeniu standardowego wyjścia jednego procesu do standardowego wejścia drugiego.
+Potok łączy stdout jednego procesu z stdin drugiego procesu:
+
+
+polecenie1 | polecenie2 użycie wyniku polecenia1 jako danych wejściowych dla polecenia2
+
+tee - rozgałęzienie potoku (do pliku i na wejście następnego polecenia)
+polecenie1 | tee plik | polecenie2  
+tee pliki 	przesłanie jednej kopii na standardowe wyjście, a drugiej do pliku
+
+polecenia:
+who, finger
+   lista aktualnie zalogowanych uzytkowników	
+wc
+   liczy linie, słowa, znaki	
+head
+czyta początek pliku , domyślnie 10 linii
+tail
+czyta koniec pliku  - domyślnie 10 linii
+cut
+   wycinanie pól (słów) z rekordu (linii)
+sort
+sortowanie liniami
+uniq
+usuń powtarzające się linie, działa na posortowanych danych (unique)
+
+1.
+Z pliku /etc/passwd wyświetlić; login i nazwę katalogu domowego (użyj polecenia cut)
+
+Wyświetlić listę zalogowanych użytkowników, same loginy
+
+
+2.
+Z polecenia ls -l wyświetlić tylko: uprawnienia właściciela i nazwe właściciela 
+
+
+3.
+Policzyć ilu jest użytkowników aktualnie zalogowanych w systemie
+(who,wc,potok)
+
+
+4.
+Policzyć ile jest w katalogu /bin plików, których nazwa zaczyna się na literę "n"
+
+
+5.
+Utorzyć zmienną ile, która pamięta ilu jest użytkowników zalogowanych w systemie
+
+
+6.
+napisać skrypt, który sprawdza, czy liczba zalogowanych użytkowników nie przekroczyła 20.
+TAK - wyświetla komunikat: "Za duzo"
+NIE - komunikat OK (if, who, wc)
+
+
+7.
+Utworzyć plik "info" zawierający:
+imie i nazwisko, nazwe logowania i nazwę katalogu domowego (jednym poleceniem, skorzystaj ze zmiennych środowiskowych).
+
+ 
+
+8.Do plku "info" dopisać datę w formacie RRRR-MM-DD
+Polecenie find cd.
+===================
+
+Polecenie find wyszukuje pliki w strukturze katalogów i może na wyszukanych plikach wykonywać różne operacje
+
+Składnia
+find katalog_w_którym_wyszukuje kryteria_selekcji  polecenie_do_wykonania_na znalezionych _plikach
+
+
+-exec polecenie ; 	 uruchamia polecenie dla każdego odnalezionego pliku
+-ok polecenie ; 	 tak jak exec ale dodatkowo pyta o potwierdzenie przed wykonaniem polecenia.
+
+Uwaga!!!
+łańcuch '{}' jest podmieniany na obecnie przetwarzana nazwę pliku
+Pamiętajmy o konieczności cytowania znaków specjalnych!
+
+ćwiczenia
+1.Polecenie wyszukuje wszystkie pliki zwykłe z /tmp których właścicielem jest "magda" i kopiuje je do katlogu ~/cw7
+
+2.Polecenie wyszukuje w ~/tmp wszystkie pliki zwykłe których rozmiar jest >1 KB i do znalezionych plików grupie dodaje prawo "w"
+
+Uprawnienia do plików cd.
+===============================
+
+Prawa specjalne
+=======================
+Bit lepki (ang. sticky bit), prawo "t"
+
+Ustawione dla katalogu, umożliwia kasowanie elementów w nim się znajdujących tylko poprzez właściciela katalogu, właściciela pliku który w tym katalogu się znajduje lub roota.
+
+Ustawione dla pliku wykonywalnego, powoduje przechowywanie w pamięci operacyjnej pliku wykonywalnego po zakończeniu działania programu, opcja obecnie rzadko stosowana, zaprojektowana by zmniejszyć koszty uruchamiania popularnych programów. 
+
+Prawo "t" stosowane jest dla katalogu /tmp, który zgodnie z przyjętą konwencją, powinien być dostępny dla wszystkich, jednak użytkownicy nie mogą mieć prawa do usuwania plików których nie są właścicielami.
+
+Nadawanie prawa "t"
+chmod u+t test
+
+Lub wykorzystując zapis numeryczny:
+
+chmod 1000 test
+
+=================
+
+prawo "s" setuid, setgid
+
+prawo "s" ustawione do plików wykonywalnych powoduje uruchomienie danego programu, na prawach właściciela pliku a nie użytkownika, który go uruchamia. 
+
+chmod u+s program
+Lub wykorzystując zapis numeryczny:
+chmod 4000 program
+
+Tryb setgid działa identycznie jak setuid z tą różnicą program uruchamiany jest na prawach grupy posiadacza pliku.
+chmod g+s program
+Lub wykorzystując zapis numeryczny:
+chmod 2000 program
+
+
+Prawa specjalne pojawiają się zawsze w miejscu normalnie definiującym uprawnienia dotyczące wykonywania danego pliku. 
+SetUID zajmie miejsce w informacji o prawach wykonania dla właściciela, 
+SetGID – grupy 
+sticky bit – innych użytkowników. 
+Ponieważ prawa specjalne „zajęły” nam miejsce, w którym znajdowała się informacja o prawie wykonania 
+(lub jego braku), czy prawo x jest czy nie dowiemy się odpowiednio dzięki małej lub wielkiej literze 
+odpowiadającej za prawo specjalne.
+
+
+Zadanie 1
+==========
+Wyszukać w katalogu /usr/bin wszystkie pliki, które maja ustawine prawo "s" 
+setuid
+
+
+
+Wyszukać w katalogu /usr/bin wszystkie pliki, które maja ustawine
+prawo "s" SUID lub SGID
+
+Wyszukać w katalogu /usr/bin wszystkie pliki, które maja ustawine 
+prawo "s" SUID i SGID
+
+Zadanie 2
+=========
+
+polecenie diff - porównywanie plików
+
+Napisać skrypt, który sprawdzi, czy nie zmieniła się lista plików z prawem 's' w katalogu /usr/bin.
+Logujemy sie na konta domenowe.
+Instrukcja logowania na stronie:
+http://ois.uwm.edu.pl/
+
+Zmiana hasła, polecenie: passwd
+
+==================
+Tworzenie dołączeń
+polecenie: ln
+linki symboliczne
+linki twarde
+==================
+Pojęcie i-węzła (inode)
+==================
+polecenie: stat nazwaPliku
+wyświetla status pliku
+==================
+Przeczytać informacje zawarte w pliku dowiazania.pdf
+==================
+
+Polecenie find
+
+find [ścieżka] [opcje] wyrażenie testujące
+
+Przykłady
+=========
+w katalogu /etc i podkatalogach znaleźć pliki których nazwa zaczyna się od "passwd"
+find /etc -name passwd* 2>/dev/null
+
+w katalogu /etc (bez podkatalogów) znaleźć pliki których nazwa zaczyna się od "passwd"
+find /etc -maxdepth 1 -name passwd* 2>/dev/null
+
+w katalogu /etc (bez podkatalogów) znaleźć pliki które były zmieniane w ciągu ostatnich 30 dni (zmiana zawartości)
+find /etc -maxdepth 1 -mtime -31
+
+w katalogu /bin (bez podkatalogów) znaleźć pliki których rozmiar >4KB
+find /bin -maxdepth 1 -size +4k
+
+w katalogu /tmp (bez podkatalogów) znaleźć pliki których włascicielem jest student25
+find /tmp -maxdepth 1 -user student25
+
+w katalogu /tmp (bez podkatalogów) znaleźć pliki których włascicielem nie jest student25
+find /tmp -maxdepth 1 ! -user student25
+
+w katalogu /tmp (bez podkatalogów) znaleźć pliki zwykłe  których włascicielem nie jest student25
+find /tmp -maxdepth 1 ! -user student25 -type f
+
+Wyszukać wszystkie podkatalogi katalogu domowego
+find ~ -type d
+
+W katalogu /bin  wyszukać pliki typu link symboliczny, których nazwa zaczyna się na literę "r".
+find /bin -type l -name r*
+
+W katalogu /bin  wyszukać pliki zwykłe lub pliki typu link symboliczny, których nazwa zaczyna się na literę "r".
+find /bin \( -type l -or -type f \) -and -name r*
+
+
+w katalogu /etc (bez podkatalogów) znaleźć pliki które nie były zmieniane w ciągu ostatnich 30 dni (zmiana zawartości).
+
+Wyszukać w katalogu domowym wszystkie pliki z czasem modyfikacji póżniejszym niż do pliku  /etc/passwd.
+
+W katalogu /bin znaleźć pliki zwykłe o rozmiarze z przedziału od 1kB do 4kB.
+
+W katalogu /tmp wyszukać podkatalogi, których jesteście włascicielami
+
+Znajdź wszystkie katalogi o nazwie bin, które znajdują się w
+katalogu /usr
+
+W katalogu domowym znaleźć pliki których status nie był zmieniany w ciągu ostatnich 10 dni.
+Skrypt z wejściówki IO gr. 3
+=============================
+Założyć katalog ~/cw7, przejść do założonego katalogu
+
+Skrypt tworzymy w założonym katalogu!
+Nazwa skryptu "wej2"
+
+Skrypt prosi o podanie nazwy pliku . 
+Do pliku o podanej nazwie tworzy w katologu ~/cw7 dowiązanie twarde o nazwie "nowaNazwa"
+sprawdza czy utworzenie linku twardego zakończyło sie powodzeniem
+TAK
+		do pliku ~/log dopisuje informacje:
+		data w formacie RR/MM/DD
+                utworzono link twardy do pliku "podana nazwa pliku"
+NIE
+		komunikat na ekran: "operacja zakonczona niepowodzeniem"
+
+#! /bin/bash
+read -p "Podaj nazwe pliku: " plik
+ln ${plik} ~/cw7/nowaNazwa
+if [ $? -eq 0 ];then
+	date +%y/%m/%d>>~/log
+	echo "utworzono link twardy do pliku ${plik}">>~/log
+else
+	echo "operacja zakonczona niepowodzeniem"
+fi
+
+
+
+polecenie uniq
+=================
+usuń powtarzające się linie, działa na posortowanych danych 
+
+sort - sortuje
+
+cut -d":" -f4
+
+who |cut -d" " -f1 | sort | uniq
+who |cut -d" " -f1 | sort | uniq -d
+
+Polecenie find cd.
+===================
+
+Polecenie find wyszukuje pliki w strukturze katalogów i może na wyszukanych plikach wykonywać różne operacje
+
+Składnia
+find katalog_w_którym_wyszukuje kryteria_selekcji  polecenie_do_wykonania_na znalezionych _plikach
+
+
+-exec polecenie ; 	 uruchamia polecenie dla każdego odnalezionego pliku
+-ok polecenie ; 	 tak jak exec ale dodatkowo pyta o potwierdzenie przed wykonaniem polecenia.
+
+Uwaga!!!
+łańcuch '{}' jest podmieniany na obecnie przetwarzana nazwę pliku
+Pamiętajmy o konieczności cytowania znaków specjalnych!
+
+ćwiczenia
+1.Polecenie wyszukuje wszystkie pliki zwykłe z /tmp których właścicielem jest "magda" i kopiuje je do katlogu ~/cw7
+
+
+find /tmp -type f -user magda 2>/dev/null -exec cp -v '{}' ~/cw7 \;
+
+
+2.Polecenie wyszukuje w /tmp wszystkie pliki zwykłe których rozmiar jest >1 KB i do znalezionych plików grupie dodaje prawo "w"
+
+find /tmp -type f -size +1k 2>/dev/null -exec chmod -v g+w '{}' \;
+
+Uprawnienia do plików cd.
+===============================
+
+Prawa specjalne
+=======================
+Bit lepki (ang. sticky bit), prawo "t"
+
+Ustawione dla katalogu, umożliwia kasowanie elementów w nim się znajdujących tylko poprzez właściciela katalogu, właściciela pliku który w tym katalogu się znajduje lub roota.
+
+Ustawione dla pliku wykonywalnego, powoduje przechowywanie w pamięci operacyjnej pliku wykonywalnego po zakończeniu działania programu, opcja obecnie rzadko stosowana, zaprojektowana by zmniejszyć koszty uruchamiania popularnych programów. 
+
+Prawo "t" stosowane jest dla katalogu /tmp, który zgodnie z przyjętą konwencją, powinien być dostępny dla wszystkich, jednak użytkownicy nie mogą mieć prawa do usuwania plików których nie są właścicielami.
+
+Nadawanie prawa "t"
+chmod o+t test
+
+Lub wykorzystując zapis numeryczny:
+
+chmod 1000 test
+
+=================
+
+prawo "s" ustawione do plików wykonywalnych powoduje uruchomienie danego programu, na prawach właściciela pliku a nie użytkownika, który go uruchamia. 
+
+chmod u+s program
+Lub wykorzystując zapis numeryczny:
+chmod 4000 program
+
+Tryb setgid działa identycznie jak setuid z tą różnicą program uruchamiany jest na prawach grupy posiadacza pliku.
+chmod g+s program
+Lub wykorzystując zapis numeryczny:
+chmod 2000 program
+
+chmod 6751 plik            4+2
+rws r-s --x
+
+rws r-s --x  	s i x dla właściciela
+rwS r-s --x	tylko s dla właściciela
+
+
+Prawa specjalne pojawiają się zawsze w miejscu normalnie definiującym uprawnienia dotyczące wykonywania danego pliku. 
+SetUID zajmie miejsce w informacji o prawach wykonania dla właściciela, 
+SetGID – grupy 
+sticky bit – innych użytkowników. 
+Ponieważ prawa specjalne „zajęły” nam miejsce, w którym znajdowała się informacja o prawie wykonania 
+(lub jego braku), czy prawo x jest czy nie dowiemy się odpowiednio dzięki małej lub wielkiej literze 
+odpowiadającej za prawo specjalne.
+
+
+Zadanie 1
+==========
+Wyszukać w katalogu /usr/bin wszystkie pliki, które maja ustawine prawo "s" 
+setuid (s dla właściciela)
+
+find /usr/bin -perm -4000 -exec ls -l '{}' \;
+find /usr/bin -perm -u=s -exec ls -l '{}' \;
+
+Wyszukać w katalogu /usr/bin wszystkie pliki, które maja ustawine
+prawo "s" SUID lub SGID
+
+find /usr/bin -perm +6000 -exec ls -l '{}' \;
+
+Wyszukać w katalogu /usr/bin wszystkie pliki, które maja ustawine 
+prawo "s" SUID i SGID
+
+
+find /usr/bin -perm -6000 -exec ls -l '{}' \;
+
+
+Zadanie domowe
+=================
+Przemyśleć i wykonać ze zrozumieniem wszyskie przykłady z ćwiczeń!!!
+
+dodatkowe ćwiczenia
+1.napisz polecenie, które wyświetli nazwy powtórzonych plików z katalogów: /bin i /usr/bin
+(takie same nazwy w obu katalogach)
+
+2.
+Znależć w /bin pliki zwykłe, które maja liczbę dołączeń twardych >1
+
+3.Skrypt wczytuje nazwe pliku.
+Sprawdza, czy istnieje plik zwykły o podanej nazwie
+TAK
+	Wyszukuje w katalogu domowym wszystkie linki twarde utworzone do 		podanego pliku.
+NIE
+	Komunikat brak pliku
+
+Uwaga!!! nalezy najpierw przygotować sobie pliki, żeby było co szukać
+
+
+
+4.
+Napisać skrypt, który do pliku ~/cw7/info
+dopisuje informacje:
+data i godzina w formacie: dd/mm/rr gg:mm
+aktualnie zalogowanych użytkowników: liczba zalogowanych bez powtórzeń
+polecenie grep i wyrażenia regularne
+
+grep [opcje] wzorzec pliki
+wyszukuje we wskazanych plikach linie zgodne z wzorcem
+
+np.:
+wyszukać w /etc/passwd linie, które zawieraja słowo "root"
+
+grep "root" /etc/passwd
+
+wyrażenia regularne:
+^ -początek linii
+$ -koniec linii
+. jeden znak, lub brak znaku
+* dowolną ilość powtórzeń znaku poprzedzającego
+.* dowolną ilość powtórzeń dowolnego znaku
+
+wyszukać w /etc/passwd linie, które zawieraja słowo "root"
+na poczatku linii
+
+grep "^root" /etc/passwd
+
+wyszukać w /etc/passwd linie, które zawieraja na końcu linii /bin/bash
+
+grep "/bin/bash$" /etc/passwd
+
+wyszukać w /etc/passwd linie, które nie zawierają na końcu linii /bin/bash
+
+
+grep -v "/bin/bash$" /etc/passwd
+
+wyszukać w katalogu /etc pliki (nazwy plików), które zawierają słowo PATH
+uwaga, uwzględnić wielkość liter
+
+grep -l "PATH" /etc/passwd
+
+
+ćwiczenie
+=========
+Napisać skrypt, który wczytuje nazwę użytkownika
+i sprawdza, czy podany użytkownik jest zalogowany 
+
+read
+who
+grep
+wc
+if
+
+Deskryptor pliku – identyfikator pliku wykorzystywany przez system operacyjny. Po wykonaniu operacji otwarcia pliku, deskryptor pliku może być wykorzystywany wielokrotnie przez wywołanie systemowe w operacjach wejścia/wyjścia.
+Deskryptor pliku jest zwracany przez funkcje systemowe z rodziny open.
+Określenie deskryptor pliku jest używane głównie w systemach operacyjnych zgodnych z normą POSIX (grupa Linux). W terminologii Microsoft Windows używane jest określenie "uchwyt pliku" (ang. file handle).
+Zgodnie z POSIX deskryptor pliku to liczba całkowita, czyli wartość typu int z języka C. Domyślnie każdy proces po uruchomieniu ma otwarte 3 standardowe deskryptory plików:
+{źródło: Wikipedia)
+
+
+Przekierowanie standardowego wejścia, wyjścia
+-----------------------------------------------
+
+Deskryptory plików	opis	domyślne urządzenie
+---------------------------------------------
+0			stdin	klawiatura
+1			stdout	terminal danych prawidłowych
+2			stderr	terminal błędów
+
+Proste przekierowania
+-----------------------
+polecenie>plik     plik jest tworzony od nowa (nadpisywanie)
+polecenie>>plik    dopisywanie
+polecenie<plik
+
+ćwiczenia:
+	ls -l >lista
+---
+używając przekierowania utworzyć plik "toJa" zawierający wasze imię i nazwisko
+	echo Jan Kowalski > toJa
+---
+Do pliku toJa dopisać nazwę waszego katalogu domowego
+	echo ~ >> toJa
+lub
+	echo ${HOME} >> toJa
+---
+Z katalogu /tmp wyświetlić pliki, których włascicielem jest magda
+	find /tmp -user "magda"
+	find /tmp -user "magda" >plikiMagdy
+to samo co:
+	find /tmp -user "magda" 1>plikiMagdy
+przekierowanie komunikatów o błedach
+	find /tmp -user "magda" 2>bledy
+	find /tmp -user "magda" 2>bledy 1>plikiMagdy
+---
+przekierowanie stdin
+echo Magda>mojeImie
+read imie<mojeImie
+
+Potok:
+---------
+Potok (ang. pipe) jest to mechanizm komunikacji międzyprocesowej umożliwiający bezpośrednią wymianę danych między uruchomionymi procesami. Komunikacja ta jest możliwia dzięki podłączeniu standardowego wyjścia jednego procesu do standardowego wejścia drugiego.
+
+polecenie1 | polecenie2 użycie wyniku polecenia1 jako danych wejściowych dla polecenia2
+
+tee - rozgałęzienie potoku (do pliku i na wejście następnego polecenia)
+polecenie1 | tee plik | polecenie2  
+tee pliki 	przesłanie jednej kopii na standardowe wyjście, a drugiej do pliku
+
+polecenia:
+who, finger
+   lista aktualnie zalogowanych uzytkowników	
+wc
+   liczy linie, słowa, znaki	
+head
+czyta początek pliku , domyślnie 10 linii
+tail
+czyta koniec pliku  - domyślnie 10 linii
+cut
+   wycinanie pól (słów) z rekordu (linii)
+sort
+sortowanie liniami
+uniq
+usuń powtarzające się linie, działa na posortowanych danych (unique)
+
+
+1.
+Z pliku /etc/passwd wyświetlić; login i nazwę katalogu domowego (użyj polecenia cut)
+cut -d":" -f1,6 /etc/passwd
+
+Wyświetlić listę zalogowanych użytkowników, same loginy
+who | cut -d" " -f1
+
+2.
+Z polecenia ls -l wyświetlić tylko: uprawnienia właściciela i nazwe właściciela 
+ls -l | cut -c2-4,13-19
+
+3.
+Policzyć ilu jest użytkowników aktualnie zalogowanych w systemie
+(who,wc,potok)
+who | wc -l
+
+4.
+Policzyć ile jest w katalogu /bin plików, których nazwa zaczyna się na literę "n"
+	find /bin -maxdepth -name "n*" | wc -l 
+lub 
+	ls /bin/n* | wc -l
+
+5.
+Utorzyć zmienną ile, która pamięta ilu jest użytkowników zalogowanych w systemie
+ile=`who | wc -l`
+
+6.
+napisać skrypt, który sprawdza, czy liczba zalogowanych użytkowników nie przekroczyła 20.
+TAK - wyświetla komunikat: "Za duzo"
+NIE - komunikat OK (if, who, wc)
+
+
+#! /bin/bash
+ilu=`who |wc -l`
+if [ ${ilu} -gt 20 ];then
+    echo za duzo
+else
+    echo OK
+fi
+
+lub
+
+#! /bin/bash
+if [ `who |wc -l` -gt 20 ];then
+    echo za duzo
+else
+    echo OK
+fi
+
+
+Do domu
+=========
+
+
+7.
+Utworzyć plik "info" zawierający:
+imie i nazwisko, nazwe logowania i nazwę katalogu domowego (jednym poleceniem, skorzystaj ze zmiennych środowiskowych).
+
+echo Jan Kowalski, login: ${USER}, katalog domowy: ${HOME}>info
+
+8.Do plku "info" dopisać datę w formacie RRRR-MM-DD
+
+9.Napisz skrypt, ktory sprawdza, czy w katalogu \tmp sa pliki zwykłe, których jestes włascicielem
+  Wyswietla te pliki i pyta o kazdy plik czy usunac.
+  Tak - usuwa
+  Nie - zostawia
+Uwaga, skopiuj najpierw kilka plików do \tmp, tak żeby było na czym testować.
+
+
+
+
+
+
+
+
+
+
+
+
